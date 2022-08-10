@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+    <style>
+        body {
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ pergunta }}</h1>
+    <form action="{% url 'sondagem:votar' pergunta.id %}" method="POST">
+
+        {% csrf_token %}
+
+        {% for escolha in pergunta.escolha_set.all %}
+        <p>
+            <label>
+                <input type='radio' name='escolha' value='{{escolha.id}}'>
+                {{ escolha }}
+            </label>
+        </p>
+        {% endfor %}    
+
+        <input type="submit" value="Votar">
+    </form>
+</body>
+</html>
